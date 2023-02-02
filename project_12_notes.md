@@ -122,3 +122,11 @@ https://www.youtube.com/watch?v=_nMpndIyaBU&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm
 - if you change a layer, then docker has to rebuild the layers below it
 - docker will cache the layers that don't change. when you build an image, docker looks for an existing image in the cache
  
+ <h2> #9 Managing Images and Containers </h2>
+https://www.youtube.com/watch?v=4XsjXscp70o&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7&index=9
+
+- if you type docker images then you see all images
+- if you type docker ps then you see all containers running
+- if you type docker ps -a then you see all containers in general
+- to delete a docker image do docker image rm myapp (if my app is the name)
+    - make sure you delete containers related to that docker image
