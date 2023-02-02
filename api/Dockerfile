@@ -1,4 +1,6 @@
 FROM node:17-alpine
+
+RUN npm install -g nodemon
 #tells docker what directory to use
 WORKDIR /app
 
@@ -21,4 +23,4 @@ EXPOSE 4000
 #be a running application, it is supposed to be the blueprint for a container. the container is what actually runs the application
 #CMD allows us to specify any commands that should be ran at runtime
 #we write this command as an arrya of strings
-CMD ["node", "app.js"]
+CMD ["npm", "run", "dev"]

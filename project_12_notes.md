@@ -1,7 +1,14 @@
+**Tutorial Complete**
+
 Purpose:
 
 - notate everying in Docker Crash Course
 - Linux containers are technologies that allow you to package and isolate applications with their entire runtime environment—all of the files necessary to run.
+
+Thoughts:
+
+- i feel like at this point if i learn mjv i know what i need to know to feel confident as a dev
+- look up difference between container orchestration and autoscaling/load balancing
 
 <h2>Info</h2>
 
@@ -130,3 +137,68 @@ https://www.youtube.com/watch?v=4XsjXscp70o&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm
 - if you type docker ps -a then you see all containers in general
 - to delete a docker image do docker image rm myapp (if my app is the name)
     - make sure you delete containers related to that docker image
+- to convert images
+- docker system prune -a deletes all images
+- builds an image with tag name of v1
+    - docker build -t project_12:v1 .
+- if we want to run a specific image based on tag we can do
+docker run --name myapp_c -p 4000:4000 project_12:v1
+
+<h2> #10 Volumes </h2>
+https://www.youtube.com/watch?v=Wh4BcFFr6Fc&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7&index=10
+
+- once an image is made it becomes read only, whether you change the source code or dependencies you have to rebuild the image
+- to start a container you can use docker start myapp_c
+- you can also use docker stop myapp_c to stop
+- it would be annoying to have to build a new container each time you make a change and then have to run that container, which is why docker has 
+**volumes** which are a feautre of docker that allow us to specify folders on our host computer that can be made available to running containers
+- we can map those folders on our host computer to specific folders inside the cotnainer so that if something changed inside the folder, that chane would also
+be reflected inside the folders we mapped to in the container
+- volumes just map folders on your computer to folders in the container but they do not change the image itself
+- if we wanted to update the image to share with others or to create new containers then you'd have to rebuild the image using docker build again 
+- the reason volumes are helpful is because you can see the changes you make without building anything
+- nodemon -L app.js is the command ur using to run, you need the -L because it alters the way nodemon works with docker 
+- you need this inside the script if you're working with windows, otherwise it won't work
+    - he mentioned nodemon is helpful during dev but probably not something you'd need in production
+- this will remove a container once you stop it:
+    - docker run --name myapp_c_nodemon -p 4000:4000 --rm project_12:nodemon 
+- now the thing is nodemon watches for changes to the app.js in the container and it restarts the server when it detects one. without nodemon, it wouldn't do that.
+- note that nodemon watches the app.js files in the container, not what's on your computer. which is why volumes need to come into play
+- to run a container with a volume
+    - docker run --name myapp_c_nodemon -p 4000:4000 --rm -v /Users/junaidmohamed/Documents/code/projects/project_12:/app project_12:nodemon 
+    - right click on panel in vs code and hit cpy path
+    - above maps project folder on our computer to the app folder in the container
+    - a  problem!!!: 
+        - you delete node_modules from your project folder and it gets deleted on the running container BUT your container NEEDS the node modules
+- in order to prevent above problem we need to map an anonymous volume
+docker run --name myapp_c_nodemon -p 4000:4000 --rm -v /Users/junaidmohamed/Documents/code/projects/project_12:/app -v /app/node_modules project_12:nodemon 
+- this volume specifies the location of the node modules folder inside the container itself when its running and it doesn't map
+that folder to a specific folder on our computer. it maps to itself so it doesn't look at your local files.
+- docker compose in the future makes this easier
+
+<h2> #11 Docker Compose </h2>
+https://www.youtube.com/watch?v=TSySwrQcevM&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7&index=11
+
+- its annoying to type in super long command from last video in terminal
+- sometimes we might multiple projects and we might want to run all those containers at once
+- imagine you want to runa  front end, back end, and db all in seperate containers
+- docker compose is a tool that comes fully baked into docker itself
+- docker compose gives us a way to make a single docker compose file which contains all the container config of our projects
+- all the info is in the docker compose file
+- docker system prune to delete all containers/images
+- put docker-compose up in terminal to run docker compose
+- docker-compose down --rmi all -v to remove all containers amd images and volumes created
+
+<h2> #12 Dockerizing a React App </h2>
+https://www.youtube.com/watch?v=QePBbG5MoKk&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7&index=12
+
+- you add to the docker compose file in this tutorial and you add the myblog folder
+- you can visit localhost:3000 after to see the app taking data from the backend
+
+<h2> #13 Sharing Images on Docker Hub </h2>
+https://www.youtube.com/watch?v=YS35VHsbS-0&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm3h7&index=13
+
+- you registered with dockerhub with junebugdev@gmail.com
+- teaches you to push image to repo
+- do docker build -t junebugdev/myapi . 
+- you didn't do this cuz you didn't feel like it but its pretty intuitive
