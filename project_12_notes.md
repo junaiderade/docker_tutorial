@@ -202,3 +202,8 @@ https://www.youtube.com/watch?v=YS35VHsbS-0&list=PL4cUxeGkcC9hxjeEtdHFNYMtCpjNBm
 - teaches you to push image to repo
 - do docker build -t junebugdev/myapi . 
 - you didn't do this cuz you didn't feel like it but its pretty intuitive
+
+<h2>Deploying Docker Container using ECR</h2>
+https://towardsdatascience.com/deploying-a-docker-container-with-ecs-and-fargate-7b0cbc9cd608
+
+- aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin [account number].dkr.ecr.us-east-1.amazonaws.com
